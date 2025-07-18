@@ -263,7 +263,9 @@ class Packet {
             this.voltage = data.getUint24(4) / 100; // volts
             this.current = data.getUint24(7) / 100; // amps
             this.capacity = data.getUint24(10); // mAh
+            console.log("energy RAW reading: ", data.getUint32(13));
             this.energy = data.getUint32(13) / 100; // Wh
+            console.log("energy value: ", data.getUint32(13)/100);
         }
 
         this.power = Math.round(100 * this.voltage * this.current) / 100; // W
@@ -318,7 +320,7 @@ class Packet {
     }
 
     string(): string {
-        return `[${this.time.toLocaleString()}] ${this.voltage.toFixed(2)}V ${this.current.toFixed(2)}A ${this.temp}°C ${this.capacity}mAh ${this.energy.toFixed(2)}Wh (${this.duration})`;
+        return `[${this.time.toLocaleString()}] ${this.voltage.toFixed(2)}V ${this.current.toFixed(2)}A ${this.temp}°C ${this.capacity}mAh ${this.energy.toFixed(5)}Wh (${this.duration})`;
     }
 
     static durationString(duration: PacketDuration): string {
